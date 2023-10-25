@@ -1,0 +1,27 @@
+POST http://localhost:8080/user
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"username": "Verca", "password":  "Verca"}
+
+
+###
+
+POST http://localhost:8080/projects
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "name": "My Project2",
+  "contributorsIds": [3]
+}
+
+
+###
+
+GET http://localhost:8080/user/3/projects
+Accept: application/json
+
+
