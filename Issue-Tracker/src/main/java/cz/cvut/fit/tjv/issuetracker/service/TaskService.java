@@ -7,21 +7,29 @@ import cz.cvut.fit.tjv.issuetracker.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TaskService {
+public class TaskService extends CrudService<Integer, Task, TaskDTO, TaskCreateDTO>{
 
-    TaskRepository taskRepository;
+    public TaskService(TaskRepository taskRepository) {
+        super(taskRepository);
+    }
 
-    public TaskDTO create(TaskCreateDTO taskCreateDTO) throws Exception {
-        return toDTO(taskRepository.save( new Task(
-                taskCreateDTO.getTaskName(),
-                taskCreateDTO.getDescription(),
-                taskCreateDTO.getCreationDate(),
-                taskCreateDTO.getDueDate(),
-                taskCreateDTO.getStatus())));
+    @Override
+    protected Task updateEntity(Task existingEntity, TaskCreateDTO e) throws Exception {
+        existingEntity.setTaskName(e.getTaskName());
+        existingEntity.setDescription(e.getDescription());
+        existingEntity.setCreationDate(e.getCreationDate());
+        existingEntity.setDueDate(e.getDueDate());
+        existingEntity.setStatus(e.getStatus());
+        return existingEntity;
     }
 
     public TaskDTO toDTO(Task t)
     {
         return new TaskDTO(t.getId(), t.getTaskName(), t.getDescription(), t.getCreationDate(), t.getDueDate(), t.getStatus());
+    }
+
+    @Override
+    protected Task toEntity(TaskCreateDTO t) {
+        return new Task(t.getTaskName(), t.getDescription(), t.getCreationDate(), t.getDueDate(), t.getStatus());
     }
 }

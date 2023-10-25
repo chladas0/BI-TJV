@@ -3,7 +3,7 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{"username": "Verca", "password":  "Verca"}
+{"username": "", "password":  "Verca"}
 
 
 ###
@@ -15,7 +15,8 @@ Content-Type: application/json
 
 {
   "name": "My Project2",
-  "contributorsIds": [3]
+  "contributorsIds": [3,45],
+  "description": "Tento projekt je fakt uzasny :) Mam rad JAVU (ne)"
 }
 
 

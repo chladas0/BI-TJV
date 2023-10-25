@@ -12,7 +12,8 @@ public class ProjectCreateDTO {
     private final List<Integer> contributorsIds;
 
     private final String description;
-    
+
+    //todo add all variables
     public ProjectCreateDTO(String name, List<Integer> contributorsIds, String description)
     {
         this.name = name;

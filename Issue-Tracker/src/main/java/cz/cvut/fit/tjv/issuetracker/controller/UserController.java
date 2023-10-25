@@ -44,7 +44,7 @@ public class UserController
     }
 
     @PostMapping("/user")
-    UserDTO save(@RequestBody UserCreateDTO author) {
+    UserDTO save(@RequestBody UserCreateDTO author) throws Exception {
         return userService.create(author);
     }
 

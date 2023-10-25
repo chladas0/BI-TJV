@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Data
-public class Project {
+public class Project{
     @Id
     @GeneratedValue
     private int id;

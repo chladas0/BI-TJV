@@ -8,75 +8,35 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
-public class UserService {
-
-    private final UserRepository userRepository;
+public class UserService extends CrudService<Integer, User, UserDTO, UserCreateDTO>{
 
     @Autowired
     public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
+        super(userRepository);
     }
 
-    // Finds -----------------------------------------------------------------------------------------------------------
-    public Optional<User> findById(int id) {
-        return userRepository.findById(id);
+    @Override
+    protected User updateEntity(User existingEntity, UserCreateDTO e) {
+        existingEntity.setUsername(e.getUsername());
+        existingEntity.setPassword(e.getPassword());
+        return existingEntity;
     }
 
-    public Optional<UserDTO> findByIDasDTO(int id)
-    {
-        return toDTO(userRepository.findById(id));
-    }
-
-
-    public List<UserDTO> findAll()
-    {
-        return userRepository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
-    }
-
-
-    public List<User> findByIDs(List<Integer> ids)
-    {
-        return userRepository.findAllById(ids);
-    }
-    // -----------------------------------------------------------------------------------------------------------------
-
-    public UserDTO create(UserCreateDTO user)
-    {
-        return toDTO(userRepository.save(new User(user.getUsername(), user.getPassword())));
-    }
-
-    // method is public and called from outside, transaction, commit, saved when its managed
-    @Transactional
-    public UserDTO update(int id, UserCreateDTO userCreateDto) throws Exception {
-        Optional<User> optUser = userRepository.findById(id);
-
-        // todo exception class catch in controllers
-
-        if(optUser.isEmpty())
-            throw new Exception("No such user {fix me :)}");
-
-        User user = optUser.get();
-        user.setUsername(userCreateDto.getUsername());
-
-        return toDTO(user);
-    }
-
-
-    // Helpers ---------------------------------------------------------------------------------------------------------
-    private UserDTO toDTO(User user)
+    @Override
+    protected UserDTO toDTO(User user)
     {
         return new UserDTO(user.getId(), user.getUsername());
     }
 
-    private Optional<UserDTO> toDTO(Optional<User> user)
-    {
-        return user.map(this::toDTO);
+    @Override
+    protected User toEntity(UserCreateDTO userCreateDTO) {
+        return new User(userCreateDTO.getUsername(), userCreateDTO.getPassword());
     }
-    // -----------------------------------------------------------------------------------------------------------------
-
 }
