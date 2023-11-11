@@ -1,5 +1,7 @@
 package cz.cvut.fit.tjv.issuetracker.service;
 
+import cz.cvut.fit.tjv.issuetracker.Exception.EntityStateException;
+import cz.cvut.fit.tjv.issuetracker.Exception.NonexistentEntityReferenceException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -15,19 +17,16 @@ public abstract class CrudService <ID, Entity, DTO, CreateDTO>{
     }
 
 
-    public DTO create(CreateDTO e) throws Exception {
+    public DTO create(CreateDTO e) throws NonexistentEntityReferenceException {
        return toDTO(repository.save(toEntity(e)));
     }
 
 
     @Transactional
-    public DTO update(ID id, CreateDTO e) throws Exception {
-        Optional<Entity> optEntity = repository.findById(id);
+    public DTO update(ID id, CreateDTO e) {
+        Entity entity = repository.findById(id).orElseThrow(() -> new EntityStateException("Entity for updating not found"));
 
-        if (optEntity.isEmpty())
-            throw new Exception("Fix me :)");
-
-        return toDTO(repository.save(updateEntity(optEntity.get(), e)));
+        return toDTO(repository.save(updateEntity(entity, e)));
     }
 
 
@@ -53,16 +52,16 @@ public abstract class CrudService <ID, Entity, DTO, CreateDTO>{
     }
 
 
-    public void deleteById(ID id) throws Exception {
+    public void deleteById(ID id) throws EntityStateException {
 
         if (repository.findById(id).isEmpty())
-            throw new Exception("Entity not found Fix me :)");
+            throw new EntityStateException("Entity for deleting not found");
 
         repository.deleteById(id);
     }
 
 
-    protected abstract Entity updateEntity (Entity existingEntity, CreateDTO e) throws Exception;
+    protected abstract Entity updateEntity (Entity existingEntity, CreateDTO e) throws EntityStateException;
     protected abstract DTO toDTO(Entity entity);
     private Optional<DTO> toDTO(Optional<Entity> entity)
     {

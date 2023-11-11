@@ -2,6 +2,8 @@ package cz.cvut.fit.tjv.issuetracker.service;
 
 import cz.cvut.fit.tjv.issuetracker.Entity.User;
 import cz.cvut.fit.tjv.issuetracker.Entity.Project;
+import cz.cvut.fit.tjv.issuetracker.Exception.EntityStateException;
+import cz.cvut.fit.tjv.issuetracker.Exception.NonexistentEntityReferenceException;
 import cz.cvut.fit.tjv.issuetracker.dto.ProjectCreateDTO;
 import cz.cvut.fit.tjv.issuetracker.dto.ProjectDTO;
 import cz.cvut.fit.tjv.issuetracker.repository.ProjectRepository;
@@ -23,11 +25,11 @@ public class ProjectService extends CrudService<Integer,Project, ProjectDTO, Pro
     }
 
     @Override
-    public ProjectDTO create(ProjectCreateDTO Project) throws Exception {
+    public ProjectDTO create(ProjectCreateDTO Project) throws NonexistentEntityReferenceException {
         List<User> users = userService.findByIDs(Project.getContributorsIds());
 
         if(users.size() != Project.getContributorsIds().size()) {
-            throw new Exception("Some authors not found {fix me :)}");
+            throw new NonexistentEntityReferenceException("Some contributors not found");
         }
 
         return toDTO(repository.save(toEntity(Project)));
@@ -46,12 +48,12 @@ public class ProjectService extends CrudService<Integer,Project, ProjectDTO, Pro
     }
 
     @Override
-    protected Project updateEntity(Project existingProject, ProjectCreateDTO e) throws Exception {
+    protected Project updateEntity(Project existingProject, ProjectCreateDTO e) throws EntityStateException {
 
         List<User> users = userService.findByIDs(e.getContributorsIds());
 
         if(users.size() != existingProject.getContributors().size()) {
-            throw new Exception("Some authors not found {fix me :)}");
+            throw new EntityStateException("Some authors not found");
         }
 
         existingProject.setName(e.getName());
