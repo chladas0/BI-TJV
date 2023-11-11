@@ -1,6 +1,7 @@
 package cz.cvut.fit.tjv.issuetracker.controller;
 
 import cz.cvut.fit.tjv.issuetracker.Entity.User;
+import cz.cvut.fit.tjv.issuetracker.dto.ProjectCreateDTO;
 import cz.cvut.fit.tjv.issuetracker.dto.ProjectDTO;
 import cz.cvut.fit.tjv.issuetracker.dto.UserCreateDTO;
 import cz.cvut.fit.tjv.issuetracker.dto.UserDTO;
@@ -14,28 +15,20 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
-public class UserController
+@RequestMapping("/users")
+public class UserController extends CrudController<Integer, User, UserDTO, UserCreateDTO>
 {
-    private final UserService userService;
     private final ProjectService projectService;
 
     @Autowired
-    public UserController(UserService userService, ProjectService projectService) {this.userService = userService;
+    public UserController(UserService userService, ProjectService projectService) {
+        super(userService);
         this.projectService = projectService;
     }
 
-    @GetMapping("/user/all")
-    List<UserDTO> all() {return userService.findAll();}
-
-    // todo fix exception
-    @GetMapping("/user/{id}")
-    UserDTO byId(@PathVariable int id) throws Exception {
-        return userService.findByIDasDTO(id).orElseThrow(() -> new Exception("HTTP status not found "));
-    }
-
-    @GetMapping("/user/{id}/projects")
+    @GetMapping("/{id}/projects")
     List<ProjectDTO> projectsById(@PathVariable int id) throws Exception {
-        Optional<User> optAuthor = userService.findById(id);
+        Optional<User> optAuthor = crudService.findById(id);
 
         if(optAuthor.isEmpty())
             throw new Exception("Author not found");
@@ -43,13 +36,12 @@ public class UserController
         return optAuthor.get().getProjects().stream().map(projectService::toDTO).collect(Collectors.toList());
     }
 
-    @PostMapping("/user")
-    UserDTO save(@RequestBody UserCreateDTO author) throws Exception {
-        return userService.create(author);
-    }
+    @PostMapping("/{id}/projects")
+    UserDTO createProject(@PathVariable int id, @RequestBody ProjectCreateDTO projectCreateDTO) throws Exception {
+        User user = crudService.findById(id).orElseThrow();
+        ProjectDTO project = projectService.create(projectCreateDTO);
 
-    @PutMapping("/user/{id}")
-    UserDTO save(@PathVariable int id, @RequestBody UserCreateDTO author) throws Exception {
-        return userService.update(id, author);
+        user.getProjects().add(projectService.findById(project.getId()).orElseThrow());
+        return crudService.findByIDasDTO(user.getId()).orElseThrow();
     }
 }

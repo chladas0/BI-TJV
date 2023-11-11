@@ -7,19 +7,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class CrudService <ID, Entity, EntityDTO, EntityCreateDTO>{
+public abstract class CrudService <ID, Entity, DTO, CreateDTO>{
     protected JpaRepository<Entity, ID> repository;
 
     public CrudService(JpaRepository<Entity, ID> repository) {
         this.repository = repository;
     }
 
-    public EntityDTO create(EntityCreateDTO e) throws Exception {
+
+    public DTO create(CreateDTO e) throws Exception {
        return toDTO(repository.save(toEntity(e)));
     }
 
+
     @Transactional
-    public EntityDTO update(ID id, EntityCreateDTO e) throws Exception {
+    public DTO update(ID id, CreateDTO e) throws Exception {
         Optional<Entity> optEntity = repository.findById(id);
 
         if (optEntity.isEmpty())
@@ -28,38 +30,43 @@ public abstract class CrudService <ID, Entity, EntityDTO, EntityCreateDTO>{
         return toDTO(repository.save(updateEntity(optEntity.get(), e)));
     }
 
-    public List<EntityDTO> findAll() {
+
+    public List<DTO> findAll() {
         return repository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }
+
 
     public Optional<Entity> findById(ID id) {
         return repository.findById(id);
     }
 
-    public Optional<EntityDTO> findByIDasDTO(ID id)
+
+    public Optional<DTO> findByIDasDTO(ID id)
     {
         return toDTO(repository.findById(id));
     }
+
 
     public List<Entity> findByIDs(List<ID> ids)
     {
         return repository.findAllById(ids);
     }
 
+
     public void deleteById(ID id) throws Exception {
 
         if (repository.findById(id).isEmpty())
-            throw new Exception("entity not found Fix me :)");
+            throw new Exception("Entity not found Fix me :)");
 
         repository.deleteById(id);
     }
 
 
-    protected abstract Entity updateEntity (Entity existingEntity, EntityCreateDTO e) throws Exception;
-    protected abstract EntityDTO toDTO(Entity entity);
-    private Optional<EntityDTO> toDTO(Optional<Entity> entity)
+    protected abstract Entity updateEntity (Entity existingEntity, CreateDTO e) throws Exception;
+    protected abstract DTO toDTO(Entity entity);
+    private Optional<DTO> toDTO(Optional<Entity> entity)
     {
         return entity.map(this::toDTO);
     }
-    protected abstract Entity toEntity(EntityCreateDTO entityCreateDTO);
+    protected abstract Entity toEntity(CreateDTO entityCreateDTO);
 }

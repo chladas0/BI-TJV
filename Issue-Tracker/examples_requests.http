@@ -1,28 +1,270 @@
-POST http://localhost:8080/user
+### Example post into Users
+POST http://localhost:8080/users
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{"username": "", "password":  "Verca"}
+{"username": "Andrej", "password":  "HesloJeHeslo"}
 
 
-###
+### Example post into Users
+POST http://localhost:8080/users
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"username": "Honza", "password":  "HesloNeniHeslo"}
+
+### Get all Users
+
+GET http://localhost:8080/users
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### Successfull user getByID
+
+GET http://localhost:8080/users/2
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### getByID for non-existing user // todo fix Exception, status code not found
+
+GET http://localhost:8080/users/20
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### Put - change Andrej password to 1234
+
+PUT http://localhost:8080/users/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"username" : "Andrej", "password" :  "1234"}
+
+### Put for nonExisting user // todo fix exception
+
+PUT http://localhost:8080/users/100
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"username" : "Andrej", "password" :  "1234"}
+
+### Delete for existing user
+
+DELETE http://localhost:8080/users/4
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### Delete for non existing user // todo fix the exception
+
+DELETE http://localhost:8080/users/100
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### End of testing userController (testing /users/id/projects after adding some projects) ------------------------------
+
+### Example post into Projects
 
 POST http://localhost:8080/projects
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
+{"name":  "TJV Semester work", "contributorsIds" : [1], "description" :  "The best project ever made"}
+
+### Example Post in projects
+
+POST http://localhost:8080/projects
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"name":  "PA2 Semester work", "contributorsIds" : [1], "description" :  "Pure pain"}
+
+### get all projects
+
+GET http://localhost:8080/projects
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### get project by id existing
+
+GET http://localhost:8080/projects/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### get project by id non-existing // todo fix exception
+
+GET http://localhost:8080/projects/100
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### Get on users projects
+
+GET http://localhost:8080/users/1/projects
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+
+### Get on non-existing user/projects // todo fix exception
+
+GET http://localhost:8080/users/100/projects
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+
+### put on existing project
+
+PUT http://localhost:8080/projects/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"name":  "PA2 Semestral work", "contributorsIds" : [1], "description" :  "Even more of pure pain"}
+
+### put on non-existing project // todo fix exception
+
+PUT http://localhost:8080/projects/100
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"name":  "PA2 Semestral work", "contributorsIds" : [1], "description" :  "Even more of pure pain"}
+
+
+### delete on exisitng project
+DELETE http://localhost:8080/projects/3
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### delete on non-exisitng project // todo fix exception
+DELETE http://localhost:8080/projects/100
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### end of testing projectController -------------------------------------------------------------------------
+
+### POST GET EX, GET NONEX, PUT ex, PUT nonex, DELETE ex, DELETE nonex
+
+POST http://localhost:8080/task
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
 {
-  "name": "My Project2",
-  "contributorsIds": [3,45],
-  "description": "Tento projekt je fakt uzasny :) Mam rad JAVU (ne)"
+  "taskName": "Dokoncit fit",
+  "description": "Krasny ukol, zcela nemozny",
+  "creationDate": "2023-11-11T14:30:00.000Z",
+  "dueDate": "2023-12-01T18:00:00.000Z",
+  "status": "IN_PROGRESS"
 }
 
 
-###
+### get tasks
 
-GET http://localhost:8080/user/3/projects
-Accept: application/json
+GET http://localhost:8080/task
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
 
 
+### get existing task - fix excepotion
+
+GET http://localhost:8080/task/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+
+### get non-existing task - fix excepotion
+
+GET http://localhost:8080/task/100
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+
+### put on existing task
+
+PUT http://localhost:8080/task/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "taskName": "Dokoncit fit",
+  "description": "Nekrasny ukol, zcela nemozny",
+  "creationDate": "2023-11-11T14:30:00.000Z",
+  "dueDate": "2023-12-01T18:00:00.000Z",
+  "status": "TODO"
+}
+
+### put on non-existing task  // fix exception
+
+PUT http://localhost:8080/task/100
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "taskName": "Dokoncit fit",
+  "description": "Nekrasny ukol, zcela nemozny",
+  "creationDate": "2023-11-11T14:30:00.000Z",
+  "dueDate": "2023-12-01T18:00:00.000Z",
+  "status": "TODO"
+}
+
+
+### delete on exisitng task
+
+DELETE http://localhost:8080/task/1
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+### delete on non-exisitng task // fix exception
+
+DELETE http://localhost:8080/task/100
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+
+### adding project to the user // maybe not needed end point
+
+POST http://localhost:8080/users/2/projects
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{"name":  "Honzovo projekt2", "contributorsIds" : [2], "description" :  "Even more of pure pain"}
+
+
+### adding tasks to some project
+
+POST http://localhost:8080/projects/1/tasks
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "taskName": "Nedokonciaat fit",
+  "description": "krasny ukol, zcela mozny",
+  "creationDate": "2023-11-11T14:30:00.000Z",
+  "dueDate": "2023-12-01T18:00:00.000Z",
+  "status": "COMPLETED"
+}

@@ -14,7 +14,7 @@ public class TaskService extends CrudService<Integer, Task, TaskDTO, TaskCreateD
     }
 
     @Override
-    protected Task updateEntity(Task existingEntity, TaskCreateDTO e) throws Exception {
+    protected Task updateEntity(Task existingEntity, TaskCreateDTO e){
         existingEntity.setTaskName(e.getTaskName());
         existingEntity.setDescription(e.getDescription());
         existingEntity.setCreationDate(e.getCreationDate());

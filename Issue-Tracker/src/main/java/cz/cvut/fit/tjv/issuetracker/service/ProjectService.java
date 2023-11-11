@@ -33,6 +33,7 @@ public class ProjectService extends CrudService<Integer,Project, ProjectDTO, Pro
         return toDTO(repository.save(toEntity(Project)));
     }
 
+    @Override
     public ProjectDTO toDTO(Project Project)
     {
         return new ProjectDTO(Project.getId(), Project.getName(),
@@ -44,6 +45,7 @@ public class ProjectService extends CrudService<Integer,Project, ProjectDTO, Pro
         return new Project(projectCreateDTO.getName(), userService.findByIDs(projectCreateDTO.getContributorsIds()), projectCreateDTO.getDescription());
     }
 
+    @Override
     protected Project updateEntity(Project existingProject, ProjectCreateDTO e) throws Exception {
 
         List<User> users = userService.findByIDs(e.getContributorsIds());
