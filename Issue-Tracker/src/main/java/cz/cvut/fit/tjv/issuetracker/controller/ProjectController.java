@@ -1,11 +1,7 @@
 package cz.cvut.fit.tjv.issuetracker.controller;
 
-import cz.cvut.fit.tjv.issuetracker.Entity.Project;
-import cz.cvut.fit.tjv.issuetracker.dto.ProjectCreateDTO;
-import cz.cvut.fit.tjv.issuetracker.dto.ProjectDTO;
-import cz.cvut.fit.tjv.issuetracker.dto.TaskCreateDTO;
-import cz.cvut.fit.tjv.issuetracker.dto.TaskDTO;
-import cz.cvut.fit.tjv.issuetracker.Exception.EntityStateException;
+import cz.cvut.fit.tjv.issuetracker.dto.*;
+import cz.cvut.fit.tjv.issuetracker.entity.Project;
 import cz.cvut.fit.tjv.issuetracker.service.ProjectService;
 import cz.cvut.fit.tjv.issuetracker.service.TaskService;
 import jakarta.transaction.Transactional;
@@ -29,6 +25,12 @@ public class ProjectController extends CrudController<Integer, Project, ProjectD
         this.taskService = taskService;
     }
 
+    @PostMapping()
+    public ProjectDTO create(@RequestBody ProjectCreateDTO projectCreateDTO)
+    {
+        return super.create(projectCreateDTO);
+    }
+
     @Transactional
     @PostMapping("/{id}/tasks")
     public TaskDTO createTask(@PathVariable int id, @RequestBody TaskCreateDTO taskCreateDTO){
@@ -42,7 +44,7 @@ public class ProjectController extends CrudController<Integer, Project, ProjectD
 
 
     @GetMapping("/{id}/tasks")
-    List<TaskDTO> getTasks(@PathVariable int id)
+    public List<TaskDTO> getTasks(@PathVariable int id)
     {
         Project project = crudService.findById(id).orElseThrow(()
                 -> new ResponseStatusException(HttpStatus.NOT_FOUND, "UserNotFound"));

@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ### Successfull user getByID
 
-GET http://localhost:8080/users/2
+GET http://localhost:8080/users/1
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -56,7 +56,7 @@ Content-Type: application/json
 
 ### Delete for existing user
 
-DELETE http://localhost:8080/users/4
+DELETE http://localhost:8080/users/1
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -266,5 +266,13 @@ Content-Type: application/json
   "description": "krasny ukol, zcela mozny",
   "creationDate": "2023-11-11T14:30:00.000Z",
   "dueDate": "2023-12-01T18:00:00.000Z",
-  "status": "COMPLETED"
+  "status": "TODO"
 }
+
+
+###
+
+GET http://localhost:8080/users/100/unfinishedTasks
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json

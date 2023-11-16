@@ -1,18 +1,14 @@
 package cz.cvut.fit.tjv.issuetracker.service;
 
-import cz.cvut.fit.tjv.issuetracker.Entity.User;
+import cz.cvut.fit.tjv.issuetracker.entity.User;
 import cz.cvut.fit.tjv.issuetracker.dto.UserCreateDTO;
 import cz.cvut.fit.tjv.issuetracker.dto.UserDTO;
+import cz.cvut.fit.tjv.issuetracker.exception.EntityStateException;
+import cz.cvut.fit.tjv.issuetracker.exception.IllegalDataException;
 import cz.cvut.fit.tjv.issuetracker.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class UserService extends CrudService<Integer, User, UserDTO, UserCreateDTO>{
@@ -20,6 +16,18 @@ public class UserService extends CrudService<Integer, User, UserDTO, UserCreateD
     @Autowired
     public UserService(UserRepository userRepository) {
         super(userRepository);
+    }
+
+    @Override
+    public UserDTO create (UserCreateDTO userCreateDTO)
+    {
+        try{
+            return super.create(userCreateDTO);
+        }
+        catch (DataIntegrityViolationException e)
+        {
+            throw new IllegalDataException("Username is not unique");
+        }
     }
 
     @Override

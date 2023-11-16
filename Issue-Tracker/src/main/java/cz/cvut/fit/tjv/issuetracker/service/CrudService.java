@@ -1,7 +1,6 @@
 package cz.cvut.fit.tjv.issuetracker.service;
 
-import cz.cvut.fit.tjv.issuetracker.Exception.EntityStateException;
-import cz.cvut.fit.tjv.issuetracker.Exception.NonexistentEntityReferenceException;
+import cz.cvut.fit.tjv.issuetracker.exception.EntityStateException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,7 +16,8 @@ public abstract class CrudService <ID, Entity, DTO, CreateDTO>{
     }
 
 
-    public DTO create(CreateDTO e) throws NonexistentEntityReferenceException {
+    @Transactional
+    public DTO create(CreateDTO e) {
        return toDTO(repository.save(toEntity(e)));
     }
 

@@ -1,4 +1,4 @@
-package cz.cvut.fit.tjv.issuetracker.Exception;
+package cz.cvut.fit.tjv.issuetracker.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -13,7 +13,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
-    public ResponseStatusException handleNonexistentEntityReference(NonexistentEntityReferenceException e) {
+    public ResponseStatusException handleIllegalDataException(IllegalDataException e) {
         return new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
     }
 }

@@ -1,4 +1,4 @@
-package cz.cvut.fit.tjv.issuetracker.Entity;
+package cz.cvut.fit.tjv.issuetracker.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

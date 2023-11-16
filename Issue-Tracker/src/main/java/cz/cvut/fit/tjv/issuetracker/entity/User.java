@@ -1,4 +1,4 @@
-package cz.cvut.fit.tjv.issuetracker.Entity;
+package cz.cvut.fit.tjv.issuetracker.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -19,7 +19,7 @@ public class User
     @ManyToMany(mappedBy = "contributors")
     private List<Project> projects;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)

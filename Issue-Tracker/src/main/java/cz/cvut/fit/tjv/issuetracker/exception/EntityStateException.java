@@ -1,4 +1,4 @@
-package cz.cvut.fit.tjv.issuetracker.Exception;
+package cz.cvut.fit.tjv.issuetracker.exception;
 
 public class EntityStateException extends RuntimeException{
     public EntityStateException(){}

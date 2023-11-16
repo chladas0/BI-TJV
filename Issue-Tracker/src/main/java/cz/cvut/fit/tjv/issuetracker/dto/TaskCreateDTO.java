@@ -1,6 +1,6 @@
 package cz.cvut.fit.tjv.issuetracker.dto;
 
-import cz.cvut.fit.tjv.issuetracker.Entity.TaskStatus;
+import cz.cvut.fit.tjv.issuetracker.entity.TaskStatus;
 import lombok.Getter;
 
 import java.util.Date;
