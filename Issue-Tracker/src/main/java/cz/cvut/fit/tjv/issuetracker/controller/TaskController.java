@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/task")
 public class TaskController extends CrudController<Integer, Task, TaskDTO, TaskCreateDTO>{
 
-    @Autowired
     public TaskController(TaskService taskService) {
         super(taskService);
     }

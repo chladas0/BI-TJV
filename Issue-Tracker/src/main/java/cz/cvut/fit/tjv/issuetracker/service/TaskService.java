@@ -3,7 +3,9 @@ package cz.cvut.fit.tjv.issuetracker.service;
 import cz.cvut.fit.tjv.issuetracker.entity.Task;
 import cz.cvut.fit.tjv.issuetracker.dto.TaskCreateDTO;
 import cz.cvut.fit.tjv.issuetracker.dto.TaskDTO;
+import cz.cvut.fit.tjv.issuetracker.exception.EntityStateException;
 import cz.cvut.fit.tjv.issuetracker.repository.TaskRepository;
+import cz.cvut.fit.tjv.issuetracker.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,9 +15,11 @@ import java.util.stream.Collectors;
 public class TaskService extends CrudService<Integer, Task, TaskDTO, TaskCreateDTO>{
 
     private final TaskRepository taskRepository;
-    public TaskService(TaskRepository taskRepository, TaskRepository taskRepository1) {
+    private final UserRepository userRepository;
+    public TaskService(TaskRepository taskRepository, TaskRepository taskRepository1, UserRepository userRepository) {
         super(taskRepository);
         this.taskRepository = taskRepository1;
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -40,6 +44,9 @@ public class TaskService extends CrudService<Integer, Task, TaskDTO, TaskCreateD
 
     public List<TaskDTO> findAllUnfinishedTasks(int userId)
     {
+        if(userRepository.findById(userId).isEmpty())
+            throw new EntityStateException("User not found");
+
         return taskRepository.findAllUnfinishedTasks(userId).stream().map(this::toDTO).collect(Collectors.toList());
     }
 }

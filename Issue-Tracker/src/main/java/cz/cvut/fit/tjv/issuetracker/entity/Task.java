@@ -1,10 +1,7 @@
 package cz.cvut.fit.tjv.issuetracker.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -30,6 +27,10 @@ public class Task {
 
     @Column(nullable = false)
     private TaskStatus status;
+
+    @ManyToOne
+    @JoinColumn(name = "project_id")
+    private Project project;
 
     public Task(String taskName, String description, Date creationDate, Date dueDate, TaskStatus status) {
         this.taskName = taskName;

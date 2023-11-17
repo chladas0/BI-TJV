@@ -77,7 +77,7 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{"name":  "TJV Semester work", "contributorsIds" : [1], "description" :  "The best project ever made"}
+{"name":  "TJV Semester work", "contributorsIds" : [2], "description" :  "The best project ever made"}
 
 ### Example Post in projects
 
@@ -86,7 +86,7 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{"name":  "PA2 Semester work", "contributorsIds" : [1], "description" :  "Pure pain"}
+{"name":  "PA2 Semester work", "contributorsIds" : [2], "description" :  "Pure pain"}
 
 ### get all projects
 
@@ -145,7 +145,7 @@ Content-Type: application/json
 
 
 ### delete on exisitng project
-DELETE http://localhost:8080/projects/3
+DELETE http://localhost:8080/projects/1
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -272,7 +272,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8080/users/100/unfinishedTasks
+GET http://localhost:8080/users/1/unfinishedTasks
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService extends CrudService<Integer, User, UserDTO, UserCreateDTO>{
 
-    @Autowired
     public UserService(UserRepository userRepository) {
         super(userRepository);
     }

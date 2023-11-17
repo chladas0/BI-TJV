@@ -19,7 +19,6 @@ public class UserController extends CrudController<Integer, User, UserDTO, UserC
     private final ProjectService projectService;
     private final TaskService taskService;
 
-    @Autowired
     public UserController(UserService userService, ProjectService projectService, TaskService taskService) {
         super(userService);
         this.projectService = projectService;
@@ -35,7 +34,7 @@ public class UserController extends CrudController<Integer, User, UserDTO, UserC
     @GetMapping("/{id}/projects")
     public List<ProjectDTO> projectsById(@PathVariable int id){
         User optAuthor = crudService.findById(id).orElseThrow(
-                () -> new EntityStateException("Project not found"));
+                () -> new EntityStateException("User not found"));
 
         return optAuthor.getProjects().stream().map(projectService::toDTO).collect(Collectors.toList());
     }

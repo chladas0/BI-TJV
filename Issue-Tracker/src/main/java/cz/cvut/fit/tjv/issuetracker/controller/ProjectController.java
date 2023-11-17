@@ -19,7 +19,6 @@ public class ProjectController extends CrudController<Integer, Project, ProjectD
 {
     private final TaskService taskService;
 
-    @Autowired
     public ProjectController(ProjectService projectService, TaskService taskService) {
         super(projectService);
         this.taskService = taskService;
@@ -38,6 +37,7 @@ public class ProjectController extends CrudController<Integer, Project, ProjectD
                 -> new ResponseStatusException(HttpStatus.NOT_FOUND, "UserNotFound"));
 
             TaskDTO task = taskService.create(taskCreateDTO);
+            taskService.findById(task.getId()).get().setProject(project); // todo fix
             project.getTasks().add(taskService.findById(task.getId()).orElseThrow());
             return taskService.findByIDasDTO(task.getId()).orElseThrow();
     }

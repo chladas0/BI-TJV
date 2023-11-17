@@ -18,7 +18,6 @@ import java.util.stream.Collectors;
 public class ProjectService extends CrudService<Integer,Project, ProjectDTO, ProjectCreateDTO>{
     private final UserService userService;
 
-    @Autowired
     public ProjectService(ProjectRepository ProjectRepository, UserService userService) {
         super(ProjectRepository);
         this.userService = userService;
