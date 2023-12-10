@@ -3,6 +3,7 @@ package cz.cvut.fit.tjv.issuetracker.entity;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -33,6 +34,7 @@ public class Project{
         this.name = name;
         this.contributors = contributors;
         this.description = description;
+        this.tasks = new ArrayList<>();
         contributors.forEach(user -> user.getProjects().add(this));
     }
     public Project(){}

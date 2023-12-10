@@ -1,6 +1,7 @@
 package cz.cvut.fit.tjv.issuetracker.controller;
 
 import cz.cvut.fit.tjv.issuetracker.dto.*;
+import cz.cvut.fit.tjv.issuetracker.entity.Project;
 import cz.cvut.fit.tjv.issuetracker.entity.User;
 import cz.cvut.fit.tjv.issuetracker.exception.EntityStateException;
 import cz.cvut.fit.tjv.issuetracker.service.ProjectService;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class UserController extends CrudController<Integer, User, UserDTO, UserCreateDTO>
 {
     private final ProjectService projectService;
@@ -40,16 +42,16 @@ public class UserController extends CrudController<Integer, User, UserDTO, UserC
     }
 
     @PostMapping("/{id}/projects")
-    public UserDTO createProject(@PathVariable int id, @RequestBody ProjectCreateDTO projectCreateDTO){
-        User user = crudService.findById(id).orElseThrow(
+    public ProjectDTO createProject(@PathVariable int id, @RequestBody ProjectCreateDTO projectCreateDTO){
+        crudService.findById(id).orElseThrow(
                 () -> new EntityStateException("User not found"));
 
-        ProjectDTO project = projectService.create(projectCreateDTO);
-        user.getProjects().add(projectService.findById(project.getId()).orElseThrow());
-        return crudService.findByIDasDTO(user.getId()).orElseThrow();
+        if(!projectCreateDTO.getContributorsIds().contains(id))
+            projectCreateDTO.getContributorsIds().add(id);
+
+        return projectService.create(projectCreateDTO);
     }
 
-    // todo vycistit
     @GetMapping("{id}/unfinishedTasks")
     public List<TaskDTO> getUnfinished(@PathVariable int id)
     {

@@ -1,5 +1,6 @@
 package cz.cvut.fit.tjv.issuetracker.service;
 
+import cz.cvut.fit.tjv.issuetracker.entity.Task;
 import cz.cvut.fit.tjv.issuetracker.entity.User;
 import cz.cvut.fit.tjv.issuetracker.entity.Project;
 import cz.cvut.fit.tjv.issuetracker.exception.EntityStateException;
@@ -7,9 +8,9 @@ import cz.cvut.fit.tjv.issuetracker.exception.IllegalDataException;
 import cz.cvut.fit.tjv.issuetracker.dto.ProjectCreateDTO;
 import cz.cvut.fit.tjv.issuetracker.dto.ProjectDTO;
 import cz.cvut.fit.tjv.issuetracker.repository.ProjectRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -38,7 +39,8 @@ public class ProjectService extends CrudService<Integer,Project, ProjectDTO, Pro
     public ProjectDTO toDTO(Project Project)
     {
         return new ProjectDTO(Project.getId(), Project.getName(),
-                Project.getContributors().stream().map(User::getId).collect(Collectors.toList()));
+                Project.getContributors().stream().map(User::getId).collect(Collectors.toList()),
+                Project.getDescription(), Project.getTasks().stream().map(Task::getId).collect(Collectors.toList()));
     }
 
     @Override
@@ -51,9 +53,8 @@ public class ProjectService extends CrudService<Integer,Project, ProjectDTO, Pro
 
         List<User> users = userService.findByIDs(e.getContributorsIds());
 
-        if(users.size() != existingProject.getContributors().size()) {
+        if(users.size() != e.getContributorsIds().size())
             throw new EntityStateException("Some authors not found");
-        }
 
         existingProject.setName(e.getName());
         existingProject.setContributors(userService.findByIDs(e.getContributorsIds()));

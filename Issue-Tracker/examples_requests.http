@@ -4,7 +4,7 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{"username": "Andrej", "password":  "HesloJeHeslo"}
+{"username": "Andrej03", "password":  "HesloJeHeslo"}
 
 
 ### Example post into Users
@@ -111,7 +111,7 @@ Content-Type: application/json
 
 ### Get on users projects
 
-GET http://localhost:8080/users/1/projects
+GET http://localhost:8080/users/5/projects
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -136,12 +136,12 @@ Content-Type: application/json
 
 ### put on non-existing project // todo fix exception
 
-PUT http://localhost:8080/projects/100
+PUT http://localhost:8080/projects/1
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{"name":  "PA2 Semestral work", "contributorsIds" : [1], "description" :  "Even more of pure pain"}
+{"name":  "PA2 Semestral work", "contributorsIds" : [1,2,3,4], "description" :  "Even more of pure pain"}
 
 
 ### delete on exisitng project
@@ -251,7 +251,7 @@ Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
 
-{"name":  "Honzovo projekt2", "contributorsIds" : [2], "description" :  "Even more of pure pain"}
+{"name":  "Honzovo projekt233", "contributorsIds" : [1,2,3,4,5,6], "description" :  "Even more of pure pain"}
 
 
 ### adding tasks to some project
@@ -262,12 +262,32 @@ Cache-Control: no-cache
 Content-Type: application/json
 
 {
-  "taskName": "Nedokonciaat fit",
+  "taskName": "TJV CLIENT APP",
   "description": "krasny ukol, zcela mozny",
   "creationDate": "2023-11-11T14:30:00.000Z",
   "dueDate": "2023-12-01T18:00:00.000Z",
-  "status": "TODO"
+  "status": "IN_PROGRESS"
 }
+
+###
+
+POST http://localhost:8080/authenticateuser
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
+{
+  "username" : "www",
+  "password" : "karel"
+}
+
+###
+
+GET http://localhost:8080/projects/1/tasks
+Accept: */*
+Cache-Control: no-cache
+Content-Type: application/json
+
 
 
 ###

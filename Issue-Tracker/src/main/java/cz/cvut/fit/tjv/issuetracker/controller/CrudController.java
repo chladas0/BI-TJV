@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class CrudController <ID, Entity, DTO, CreateDTO>{
     protected final CrudService<ID, Entity, DTO, CreateDTO> crudService;
 
@@ -14,28 +15,28 @@ public class CrudController <ID, Entity, DTO, CreateDTO>{
     }
 
     @GetMapping
-    protected List<DTO> getAll()
+    public List<DTO> getAll()
     {
         return crudService.findAll();
     }
 
     @GetMapping("/{id}")
-    protected DTO getById(@PathVariable ID id){
+    public DTO getById(@PathVariable ID id){
         return crudService.findByIDasDTO(id).orElseThrow(()
                 -> new EntityStateException("Entity not found"));
     }
 
-    protected DTO create(@RequestBody CreateDTO createDTO){
+    public DTO create(@RequestBody CreateDTO createDTO){
         return crudService.create(createDTO);
     }
 
     @PutMapping("/{id}")
-    protected DTO update (@PathVariable ID id, @RequestBody CreateDTO createDTO){
+    public DTO update (@PathVariable ID id, @RequestBody CreateDTO createDTO){
             return crudService.update(id, createDTO);
     }
 
     @DeleteMapping("/{id}")
-    protected void delete(@PathVariable ID id){
+    public void delete(@PathVariable ID id){
             crudService.deleteById(id);
     }
 }

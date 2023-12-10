@@ -34,6 +34,7 @@ public abstract class CrudService <ID, Entity, DTO, CreateDTO>{
         return repository.findAll().stream().map(this::toDTO).collect(Collectors.toList());
     }
 
+    public List<Entity> findAllAsEntity(){return repository.findAll();}
 
     public Optional<Entity> findById(ID id) {
         return repository.findById(id);

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 @RequestMapping("/projects")
 public class ProjectController extends CrudController<Integer, Project, ProjectDTO, ProjectCreateDTO>
 {
