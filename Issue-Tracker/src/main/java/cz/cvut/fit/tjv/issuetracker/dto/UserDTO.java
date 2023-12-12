@@ -6,6 +6,7 @@ import lombok.Getter;
 public class UserDTO
 {
     private final int id;
+
     private final String username;
 
     public UserDTO(int id, String userName) {

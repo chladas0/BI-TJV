@@ -2,6 +2,7 @@ package cz.cvut.fit.tjv.issuetracker.dto;
 
 
 import lombok.Getter;
+import lombok.NonNull;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class ProjectCreateDTO {
 
     private final String description;
 
-    public ProjectCreateDTO(String name, List<Integer> contributorsIds, String description)
+    public ProjectCreateDTO(@NonNull String name, @NonNull List<Integer> contributorsIds, @NonNull String description)
     {
         this.name = name;
         this.contributorsIds = contributorsIds;

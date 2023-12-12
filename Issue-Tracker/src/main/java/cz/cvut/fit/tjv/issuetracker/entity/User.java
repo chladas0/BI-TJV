@@ -16,7 +16,7 @@ public class User
     @Setter(AccessLevel.NONE)
     private int id;
 
-    @ManyToMany(mappedBy = "contributors")
+    @ManyToMany(mappedBy = "contributors", cascade = CascadeType.ALL)
     private List<Project> projects;
 
     @Column(nullable = false, unique = true)

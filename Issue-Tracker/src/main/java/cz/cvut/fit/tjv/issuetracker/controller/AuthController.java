@@ -3,6 +3,7 @@ package cz.cvut.fit.tjv.issuetracker.controller;
 import cz.cvut.fit.tjv.issuetracker.dto.UserCreateDTO;
 import cz.cvut.fit.tjv.issuetracker.entity.User;
 import cz.cvut.fit.tjv.issuetracker.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +24,7 @@ public class AuthController {
     }
 
     @PostMapping
-    public ResponseEntity<String> authenticate(@RequestBody UserCreateDTO user) {
+    public ResponseEntity<String> authenticate(@RequestBody @Valid UserCreateDTO user) {
         Optional<User> userInDatabase = userService.findByUsername(user.getUsername());
 
         if (userInDatabase.isEmpty() || !passwordEncoder.matches(user.getPassword(), userInDatabase.get().getPassword()))

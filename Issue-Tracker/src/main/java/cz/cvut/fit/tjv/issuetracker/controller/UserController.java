@@ -1,13 +1,12 @@
 package cz.cvut.fit.tjv.issuetracker.controller;
 
 import cz.cvut.fit.tjv.issuetracker.dto.*;
-import cz.cvut.fit.tjv.issuetracker.entity.Project;
 import cz.cvut.fit.tjv.issuetracker.entity.User;
 import cz.cvut.fit.tjv.issuetracker.exception.EntityStateException;
 import cz.cvut.fit.tjv.issuetracker.service.ProjectService;
 import cz.cvut.fit.tjv.issuetracker.service.TaskService;
 import cz.cvut.fit.tjv.issuetracker.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class UserController extends CrudController<Integer, User, UserDTO, UserC
     }
 
     @PostMapping()
-    public UserDTO create(@RequestBody UserCreateDTO userCreateDTO)
+    public UserDTO create(@RequestBody @Valid UserCreateDTO userCreateDTO)
     {
         return super.create(userCreateDTO);
     }
@@ -42,7 +41,7 @@ public class UserController extends CrudController<Integer, User, UserDTO, UserC
     }
 
     @PostMapping("/{id}/projects")
-    public ProjectDTO createProject(@PathVariable int id, @RequestBody ProjectCreateDTO projectCreateDTO){
+    public ProjectDTO createProject(@PathVariable int id, @RequestBody @Valid ProjectCreateDTO projectCreateDTO){
         crudService.findById(id).orElseThrow(
                 () -> new EntityStateException("User not found"));
 

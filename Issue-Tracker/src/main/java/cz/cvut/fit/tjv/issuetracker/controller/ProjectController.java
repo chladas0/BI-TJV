@@ -5,6 +5,7 @@ import cz.cvut.fit.tjv.issuetracker.entity.Project;
 import cz.cvut.fit.tjv.issuetracker.service.ProjectService;
 import cz.cvut.fit.tjv.issuetracker.service.TaskService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,20 +26,14 @@ public class ProjectController extends CrudController<Integer, Project, ProjectD
         this.taskService = taskService;
     }
 
-    @PostMapping()
-    public ProjectDTO create(@RequestBody ProjectCreateDTO projectCreateDTO)
-    {
-        return super.create(projectCreateDTO);
-    }
-
     @Transactional
     @PostMapping("/{id}/tasks")
-    public TaskDTO createTask(@PathVariable int id, @RequestBody TaskCreateDTO taskCreateDTO){
+    public TaskDTO createTask(@PathVariable int id, @RequestBody @Valid TaskCreateDTO taskCreateDTO){
         Project project = crudService.findById(id).orElseThrow(()
                 -> new ResponseStatusException(HttpStatus.NOT_FOUND, "UserNotFound"));
 
             TaskDTO task = taskService.create(taskCreateDTO);
-            taskService.findById(task.getId()).get().setProject(project); // todo fix
+            taskService.findById(task.getId()).get().setProject(project);
             project.getTasks().add(taskService.findById(task.getId()).orElseThrow());
             return taskService.findByIDasDTO(task.getId()).orElseThrow();
     }

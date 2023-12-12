@@ -2,6 +2,7 @@ package cz.cvut.fit.tjv.issuetracker.controller;
 
 import cz.cvut.fit.tjv.issuetracker.service.CrudService;
 import cz.cvut.fit.tjv.issuetracker.exception.EntityStateException;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,12 @@ public class CrudController <ID, Entity, DTO, CreateDTO>{
                 -> new EntityStateException("Entity not found"));
     }
 
-    public DTO create(@RequestBody CreateDTO createDTO){
+    public DTO create(@RequestBody @Valid CreateDTO createDTO){
         return crudService.create(createDTO);
     }
 
     @PutMapping("/{id}")
-    public DTO update (@PathVariable ID id, @RequestBody CreateDTO createDTO){
+    public DTO update (@PathVariable ID id, @RequestBody @Valid CreateDTO createDTO){
             return crudService.update(id, createDTO);
     }
 
