@@ -4,7 +4,6 @@ import org.springframework.http.HttpStatusCode;
 
 public class EntityStateException extends RuntimeException{
     public EntityStateException(){}
-
     HttpStatusCode code = HttpStatusCode.valueOf(404);
 
     public EntityStateException(String message)

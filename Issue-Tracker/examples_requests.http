@@ -48,7 +48,7 @@ Content-Type: application/json
 
 ### Delete for existing user
 
-DELETE http://localhost:8080/users/402
+DELETE http://localhost:8080/users/404
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -159,7 +159,7 @@ Content-Type: application/json
 
 ### POST -> Post directly into Task not allow, must be under some project
 
-POST http://localhost:8080/task
+POST http://localhost:8080/tasks
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -176,7 +176,7 @@ Content-Type: application/json
 
 ### get tasks
 
-GET http://localhost:8080/task
+GET http://localhost:8080/tasks
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -184,7 +184,7 @@ Content-Type: application/json
 
 ### get existing task
 
-GET http://localhost:8080/task/10000
+GET http://localhost:8080/tasks/10000
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -192,7 +192,7 @@ Content-Type: application/json
 
 ### get non-existing task
 
-GET http://localhost:8080/task/100
+GET http://localhost:8080/tasks/100
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -216,7 +216,7 @@ Content-Type: application/json
 
 ### put on existing task
 
-PUT http://localhost:8080/task/103
+PUT http://localhost:8080/tasks/103
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -231,7 +231,7 @@ Content-Type: application/json
 
 ### deleting this task
 
-DELETE http://localhost:8080/task/103
+DELETE http://localhost:8080/tasks/103
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -239,7 +239,7 @@ Content-Type: application/json
 
 ### put on non-existing task
 
-PUT http://localhost:8080/task/100
+PUT http://localhost:8080/tasks/100
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json
@@ -254,7 +254,7 @@ Content-Type: application/json
 
 ### delete on non-exisitng task
 
-DELETE http://localhost:8080/task/10000
+DELETE http://localhost:8080/tasks/10000
 Accept: */*
 Cache-Control: no-cache
 Content-Type: application/json

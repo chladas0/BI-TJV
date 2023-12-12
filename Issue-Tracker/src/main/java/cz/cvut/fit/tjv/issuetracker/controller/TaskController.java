@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/tasks")
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
 public class TaskController extends CrudController<Integer, Task, TaskDTO, TaskCreateDTO>{
 
